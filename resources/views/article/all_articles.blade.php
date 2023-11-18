@@ -26,4 +26,29 @@
             </tr>
         @endforeach
     </table>
+    @if ($articles->hasPages())
+        <div class="paginator">
+            @if ($articles->currentPage() != 1)
+                <a href="{{$articles->previousPageUrl()}}" class="button paginator__button">Назад</a>
+            @endif
+            <ul class="paginator__list">
+                @for ($page = 1; $page < $articles->lastPage(); $page++)
+                    <li class="paginator__item">
+                        @if ($page == $articles->currentPage())
+                            <a href="{{ $articles->url($page) }}" class="paginator__link paginator__link_active" style="color: red">
+                                {{ $page }}
+                            </a>
+                        @else
+                            <a href="{{ $articles->url($page) }}" class="paginator__link">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    </li>
+                @endfor
+            </ul>
+            @if ($articles->currentPage() != $articles->lastPage())
+                <a href="{{$articles->nextPageUrl()}}" class="button paginator__button">Вперед</a>
+            @endif
+        </div>
+    @endif
 @endsection
