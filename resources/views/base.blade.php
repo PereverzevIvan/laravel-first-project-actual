@@ -17,7 +17,10 @@
                         <a href="/" class="header__link">Главная</a>
                     </li>
                     <li class="header__item">
-                        <a href="/all_articles" class="header__link">Статьи</a>
+                        <a href="/article" class="header__link">Статьи</a>
+                    </li>
+                    <li class="header__item">
+                        <a href="/article/create" class="header__link">Создание статьи</a>
                     </li>
                     <li class="header__item">
                         <a href="/contacts" class="header__link">Контакты</a>

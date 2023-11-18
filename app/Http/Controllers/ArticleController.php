@@ -13,7 +13,6 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::paginate(6);
-        // print_r($articles);
         return view('article.all_articles', ['articles' => $articles]);
     }
 
@@ -22,7 +21,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('article.create_article');
     }
 
     /**
@@ -30,7 +29,21 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'short_desc'=>'required|min:6',
+            'desc'=>'required|min:6',
+            'date'=>'required',
+        ]);
+
+        $article = new Article;
+        $article->name = $request->name;
+        $article->short_desc = $request->short_desc;
+        $article->desc = $request->desc;
+        $article->date = $request->date;
+        $article->author_id = 1;
+        $article->save();
+        return redirect('/article');
     }
 
     /**

@@ -20,10 +20,10 @@
             <label class="form__label" for="name">Имя пользователя</label>
             <input class="form__input" type="text" id="name" name="name" required>
 
-            <label class="form__label" for="">Адрес электронной почты</label>
+            <label class="form__label" for="email">Адрес электронной почты</label>
             <input class="form__input" type="email" id="email" name="email" required>
 
-            <label class="form__label" for="">Пароль</label>
+            <label class="form__label" for="password">Пароль</label>
             <input class="form__input" type="password" id="password" name="password" required>
             
             <label class="form__label" for="password_repeat">Повторите пароль</label>

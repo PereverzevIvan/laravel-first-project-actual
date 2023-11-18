@@ -32,7 +32,7 @@
                 <a href="{{$articles->previousPageUrl()}}" class="button paginator__button">Назад</a>
             @endif
             <ul class="paginator__list">
-                @for ($page = 1; $page < $articles->lastPage(); $page++)
+                @for ($page = 1; $page <= $articles->lastPage(); $page++)
                     <li class="paginator__item">
                         @if ($page == $articles->currentPage())
                             <a href="{{ $articles->url($page) }}" class="paginator__link paginator__link_active" style="color: red">
