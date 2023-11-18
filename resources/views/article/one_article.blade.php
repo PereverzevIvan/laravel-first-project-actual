@@ -11,4 +11,6 @@
 <p>{{ $article->desc }}</p>
 <p>{{ $article->date }}</p>
 
+<a href="/article/{{$article->id}}/edit" class="button button_blue">Редактировать</a>
+<a href="#" class="button button_red">Удалить</a>
 @endsection

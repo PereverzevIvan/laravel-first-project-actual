@@ -15,7 +15,7 @@
         </tr>
         @foreach($articles as $article)
             <tr class="article-table__line">
-                <td class="article-table__cell">{{ $article->name }}</td>
+                <td class="article-table__cell"><a href="/article/{{$article->id}}">{{ $article->name }}</a></td>
                 @if (isset($article->short_desc))
                 <td class="article-table__cell">{{ $article->short_desc }}</td>
                 @else

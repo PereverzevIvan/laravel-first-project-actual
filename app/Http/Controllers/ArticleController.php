@@ -12,7 +12,7 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::paginate(6);
+        $articles = Article::latest()->paginate(6);
         return view('article.all_articles', ['articles' => $articles]);
     }
 
@@ -51,7 +51,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('article.one_article', ['article' => $article]);
     }
 
     /**
@@ -59,7 +59,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
+        return view('article.edit_article', ['article' => $article]);
     }
 
     /**
@@ -67,7 +67,19 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'short_desc'=>'required|min:6',
+            'desc'=>'required|min:6',
+            'date'=>'required',
+        ]);
+
+        $article->name = $request->name;
+        $article->short_desc = $request->short_desc;
+        $article->desc = $request->desc;
+        $article->date = $request->date;
+        $article->save();
+        return redirect()->route('article.show', ['article' => $article]);
     }
 
     /**
