@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
 
 /*
@@ -29,3 +30,6 @@ Route::get('/contacts', [MainController::class, 'show_contacts']);
 // Руты для работы с пользователями
 Route::get('/register', [AuthController::class, 'create']);
 Route::post('/authenticate', [AuthController::class, 'authenticate']);
+
+// Руты для работы со статьями
+Route::resource('/article', ArticleController::class);
