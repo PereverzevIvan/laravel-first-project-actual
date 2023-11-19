@@ -52,7 +52,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $comments = Comment::where('article_id', $article->id)->get();
+        $comments = Comment::where('article_id', $article->id)->latest()->get();
         return view('article.one_article', ['article' => $article, 'comments' => $comments]);
     }
 
