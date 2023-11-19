@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Article;
 use App\Models\Comment;
 use Database\Seeders\ArticleSeeder;
+use Database\Seeders\RoleSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,9 +29,10 @@ class DatabaseSeeder extends Seeder
         // Создание статей с рандосными комментариями и тремя рандомными комментариями
         Article::factory(10)->has(Comment::factory(3))->create();
 
-        // Создание статей из json файла
-        // $this->call([
-        //     ArticleSeeder::class,
-        // ]);
+        
+        $this->call([
+            // ArticleSeeder::class, // Создание статей из json файла
+            RoleSeeder::class, // Создание двух пользователей с разными ролями
+        ]);
     }
 }
