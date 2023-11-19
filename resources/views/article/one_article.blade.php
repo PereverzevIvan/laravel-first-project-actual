@@ -47,6 +47,7 @@
                 <p class="comment__title">{{ $comment->title }}</p>
                 <p class="comment__text">{{ $comment->text }}</p>
                 <p class="comment__date">{{ $comment->created_at }}</p>
+                <p class="comment__author">{{ $comment->getAuthorName() }}</p>
                 <div class="button-box">
                     <a href="/comment/edit/{{ $comment->id }}" class="button button_blue">Редактировать</a>
                     <a href="/comment/delete/{{ $comment->id }}" class="button button_red">Удалить</a>
