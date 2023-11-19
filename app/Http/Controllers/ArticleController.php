@@ -6,6 +6,8 @@ use App\Models\Article;
 use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Mail\ArticleMail;
+use Illuminate\Support\Facades\Mail;
 
 class ArticleController extends Controller
 {
@@ -46,6 +48,9 @@ class ArticleController extends Controller
         $article->date = $request->date;
         $article->author_id = 1;
         $article->save();
+        
+        Mail::to('peregh320@gmail.com')->send(new ArticleMail());
+
         return redirect('/article');
     }
 
