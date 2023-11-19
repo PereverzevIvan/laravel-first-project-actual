@@ -23,6 +23,9 @@
                         <li class="header__item">
                             <a href="/article/create" class="header__link">Создание статьи</a>
                         </li>
+                        <li class="header__item">
+                            <a href="/comment/" class="header__link">Все комментарии</a>
+                        </li>
                     @endcan
                     <li class="header__item">
                         <a href="/contacts" class="header__link">Контакты</a>

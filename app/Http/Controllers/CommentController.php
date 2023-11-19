@@ -6,9 +6,16 @@ use Illuminate\Http\Request;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Mail\AdminCommentMail;
+use Illuminate\Support\Facades\Mail;
 
 class CommentController extends Controller
 {
+    public function index() {
+        $comments = Comment::latest()->paginate(10);
+        return view('comment.index', ['comments' => $comments]);
+    }
+    
     public function store(Request $request) {
         $request->validate([
             'title' => 'required',
@@ -22,6 +29,7 @@ class CommentController extends Controller
         $comment->author_id = Auth::id();
         $comment->article_id = $request->article_id;
         $comment->save();
+        Mail::to('peregh320@gmail.com')->send(new AdminCommentMail($comment));
 
         return redirect()->route('article.show', ['article' => $request->article_id]);
     }
@@ -52,6 +60,22 @@ class CommentController extends Controller
         $article_id = $comment->article_id;
         $comment->delete();
         return redirect()->route('article.show', ['article' => $article_id]);
+    }
+
+    public function accept($comment_id) {
+        $comment = Comment::findOrFail($comment_id);
+        $comment->status = true;
+        $comment->save();
+        
+        return redirect()->route('comments');
+    }
+
+    public function reject($comment_id) {
+        $comment = Comment::findOrFail($comment_id);
+        $comment->status = false;
+        $comment->save();
+
+        return redirect()->route('comments');
     }
 }
 

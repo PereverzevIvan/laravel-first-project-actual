@@ -19,7 +19,8 @@ class CommentFactory extends Factory
         return [
             'author_id'     =>  '1',
             'title'         =>  $this->faker->sentence(),
-            'text'          =>  $this->faker->text()
+            'text'          =>  $this->faker->text(),
+            'status'        =>  false,
         ];
     }
 }
