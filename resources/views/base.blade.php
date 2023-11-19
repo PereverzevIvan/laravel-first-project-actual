@@ -19,9 +19,11 @@
                     <li class="header__item">
                         <a href="/article" class="header__link">Статьи</a>
                     </li>
-                    <li class="header__item">
-                        <a href="/article/create" class="header__link">Создание статьи</a>
-                    </li>
+                    @can('create')
+                        <li class="header__item">
+                            <a href="/article/create" class="header__link">Создание статьи</a>
+                        </li>
+                    @endcan
                     <li class="header__item">
                         <a href="/contacts" class="header__link">Контакты</a>
                     </li>
