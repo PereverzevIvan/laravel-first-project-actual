@@ -23,8 +23,25 @@ class CommentController extends Controller
 
         return redirect()->route('article.show', ['article' => $request->article_id]);
     }
-    public function edit() {}
-    public function update() {}
+
+    public function edit($comment_id) {
+        $comment = Comment::findOrFail($comment_id);
+        return view('comment.edit_comment', ['comment' => $comment]);
+    }
+
+    public function update(Request $request, $comment_id) {
+        $request->validate([
+            'title' => 'required',
+            'text' => 'required',
+        ]);
+        
+        $comment = Comment::findOrFail($comment_id);
+        $comment->title = $request->title;
+        $comment->text = $request->text;
+        $comment->save();
+
+        return redirect()->route('article.show', ['article' => $comment->article_id]);
+    }
 
     public function delete($comment_id) {
         $comment = Comment::findOrFail($comment_id);
