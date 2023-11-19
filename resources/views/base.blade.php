@@ -25,12 +25,18 @@
                     <li class="header__item">
                         <a href="/contacts" class="header__link">Контакты</a>
                     </li>
-                    <li class="header__item">
-                        <a href="/register" class="header__link">Регистрация</a>
-                    </li>
-                    <li class="header__item">
-                        <a href="#" class="header__link">Вход</a>
-                    </li>
+                    @if (Auth::user() != null)
+                        <li class="header__item">
+                            <a href="/logout" class="header__link">{{ Auth::user()->name }}</a>
+                        </li>
+                    @else
+                        <li class="header__item">
+                            <a href="/register" class="header__link">Регистрация</a>
+                        </li>
+                        <li class="header__item">
+                            <a href="/login" class="header__link">Вход</a>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>
