@@ -9,6 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Article;
 
 class ArticleMail extends Mailable
 {
@@ -17,10 +18,8 @@ class ArticleMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(public Article $article)
+    {}
 
     /**
      * Get the message envelope.
@@ -40,6 +39,9 @@ class ArticleMail extends Mailable
     {
         return new Content(
             view: 'mail.article',
+            with: [
+                'article' => $this->article,
+            ]
         );
     }
 

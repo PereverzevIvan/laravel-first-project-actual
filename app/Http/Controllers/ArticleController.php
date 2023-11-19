@@ -49,7 +49,7 @@ class ArticleController extends Controller
         $article->author_id = 1;
         $article->save();
         
-        Mail::to('peregh320@gmail.com')->send(new ArticleMail());
+        Mail::to('peregh320@gmail.com')->send(new ArticleMail($article));
 
         return redirect('/article');
     }
