@@ -58,6 +58,10 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
+        if (isset($_GET['notify'])) {
+            auth()->user()->notifications->where('id', $_GET['notify'])->first()->markAsRead();
+        }
+
         $comments = Comment::where('article_id', $article->id)->latest()->get();
         return view('article.one_article', ['article' => $article, 'comments' => $comments]);
     }

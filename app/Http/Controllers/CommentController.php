@@ -4,10 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use App\Models\Article;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Notification;
 use App\Mail\AdminCommentMail;
 use Illuminate\Support\Facades\Mail;
+use App\Notifications\NewCommentNotify;
 
 class CommentController extends Controller
 {
@@ -28,7 +32,13 @@ class CommentController extends Controller
         $comment->text = $request->text;
         $comment->author_id = Auth::id();
         $comment->article_id = $request->article_id;
+        $comment->status = true;
         $comment->save();
+
+        $article = Article::findOrFail($comment->article_id);
+        $users = User::where('id', '!=', Auth::user()->id)->get();
+
+        Notification::send($users, new NewCommentNotify($article));
         Mail::to('peregh320@gmail.com')->send(new AdminCommentMail($comment));
 
         return redirect()->route('article.show', ['article' => $request->article_id]);
@@ -63,6 +73,7 @@ class CommentController extends Controller
     }
 
     public function accept($comment_id) {
+        Gate::authorize('admincomment', $comment);
         $comment = Comment::findOrFail($comment_id);
         $comment->status = true;
         $comment->save();
@@ -71,6 +82,7 @@ class CommentController extends Controller
     }
 
     public function reject($comment_id) {
+        Gate::authorize('admincomment', $comment);
         $comment = Comment::findOrFail($comment_id);
         $comment->status = false;
         $comment->save();

@@ -20,7 +20,7 @@ class CommentFactory extends Factory
             'author_id'     =>  '1',
             'title'         =>  $this->faker->sentence(),
             'text'          =>  $this->faker->text(),
-            'status'        =>  false,
+            'status'        =>  true,
         ];
     }
 }

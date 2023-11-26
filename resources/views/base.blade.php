@@ -24,12 +24,23 @@
                             <a href="/article/create" class="header__link">Создание статьи</a>
                         </li>
                         <li class="header__item">
-                            <a href="/comment/" class="header__link">Все комментарии</a>
+                            <a href="/comment/" class="header__link">Комментарии</a>
                         </li>
                     @endcan
-                    <li class="header__item">
-                        <a href="/contacts" class="header__link">Контакты</a>
-                    </li>
+                    @auth
+                        <li class="header__item">
+                            <div class="dropdown">
+                                <button class="dropbtn">Новый комментарии ({{ auth()->user()->unreadNotifications->count() }})</button>
+                                <div class="dropdown-content">
+                                    @foreach (auth()->user()->unreadNotifications as $notify)
+                                        <a href="{{ route('article.show', ['article' => $notify->data['article']['id'], 'notify' => $notify->id]) }}" class="header__link">
+                                            Статья: {{ $notify->data['article']['name'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </li>
+                    @endauth
                     @if (Auth::user() != null)
                         <li class="header__item">
                             <a href="/logout" class="header__link">{{ Auth::user()->name }}</a>
@@ -58,3 +69,47 @@
     </footer>
 </body>
 </html>
+
+<style>
+    /* Dropdown Button */
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 15px, 10px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
