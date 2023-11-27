@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Mail\AdminCommentMail;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewCommentNotify;
+use App\Events\newCommentEvent;
 
 class CommentController extends Controller
 {
@@ -73,17 +74,22 @@ class CommentController extends Controller
     }
 
     public function accept($comment_id) {
-        Gate::authorize('admincomment', $comment);
         $comment = Comment::findOrFail($comment_id);
+
+        Gate::authorize('admincomment', $comment);
         $comment->status = true;
         $comment->save();
+
+        $article = Article::findOrFail($comment->article_id);
+        newCommentEvent::dispatch($article);
         
         return redirect()->route('comments');
     }
 
     public function reject($comment_id) {
-        Gate::authorize('admincomment', $comment);
         $comment = Comment::findOrFail($comment_id);
+
+        Gate::authorize('admincomment', $comment);
         $comment->status = false;
         $comment->save();
 
