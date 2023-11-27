@@ -61,5 +61,30 @@
             @endif
         @endforeach
     </div>
+    @if ($comments->hasPages())
+        <div class="paginator">
+            @if ($comments->currentPage() != 1)
+                <a href="{{$comments->previousPageUrl()}}" class="button paginator__button">Назад</a>
+            @endif
+            <ul class="paginator__list">
+                @for ($page = 1; $page <= $comments->lastPage(); $page++)
+                    <li class="paginator__item">
+                        @if ($page == $comments->currentPage())
+                            <a href="{{ $comments->url($page) }}" class="paginator__link paginator__link_active" style="color: red">
+                                {{ $page }}
+                            </a>
+                        @else
+                            <a href="{{ $comments->url($page) }}" class="paginator__link">
+                                {{ $page }}
+                            </a>
+                        @endif
+                    </li>
+                @endfor
+            </ul>
+            @if ($comments->currentPage() != $comments->lastPage())
+                <a href="{{$comments->nextPageUrl()}}" class="button paginator__button">Вперед</a>
+            @endif
+        </div>
+    @endif
 </section>
 @endsection 
