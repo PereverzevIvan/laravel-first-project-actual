@@ -12,7 +12,7 @@ class MainController extends Controller
 
     public function show_all_articles() {
         $articles = json_decode(file_get_contents(public_path().'/articles.json'));
-        return view('article.all_articles', ['articles' => $articles]);
+        return view('article.all_articles_json', ['articles' => $articles]);
     }
 
     public function show_one_article(Request $request) {
@@ -21,7 +21,7 @@ class MainController extends Controller
         $data = [];
         foreach ($articles as $article) {
             if ($article->id == $id) {
-                return view('article.one_article', ['article' => $article]);
+                return view('article.one_article_json', ['article' => $article]);
                 break;
             } 
         }

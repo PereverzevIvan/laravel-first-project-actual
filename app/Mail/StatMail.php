@@ -7,20 +7,25 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
-use Illuminate\Mail\Mailables\Address;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
+use App\Models\Path;
 use App\Models\Comment;
 
-class AdminCommentMail extends Mailable
+class StatMail extends Mailable
 {
     use Queueable, SerializesModels;
+
+    protected $pathCount;
+    protected $commentCount;
 
     /**
      * Create a new message instance.
      */
-    public function __construct(public Comment $comment)
+    public function __construct(int $pathCount, int $commentCount)
     {
-        //
+        $this->pathCount = $pathCount;
+        $this->commentCount = $commentCount;
     }
 
     /**
@@ -28,10 +33,9 @@ class AdminCommentMail extends Mailable
      */
     public function envelope(): Envelope
     {
-        
         return new Envelope(
             from: new Address('i.d.pereverzev@mail.ru'),
-            subject: 'Admin Comment Mail',
+            subject: 'Statistic Mail',
         );
     }
 
@@ -41,9 +45,10 @@ class AdminCommentMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.comment',
+            view: 'mail.statistic',
             with: [
-                'comment' => $this->comment,
+                'pathCount' => $this->pathCount,
+                'commentCount' => $this->commentCount,
             ]
         );
     }

@@ -20,7 +20,6 @@ class ArticleController extends Controller
     {
         $page = '0';
         if (isset($_GET['page'])) $page = $_GET['page'];
-
         $articles = Cache::remember('articles'.$page, 3000, function () {
             return Article::latest()->paginate(6);
         });
@@ -57,8 +56,8 @@ class ArticleController extends Controller
         $res = $article->save();
 
         if ($res) {
-            $this->clearCacheForAllArticles();
             ArticleMailJob::dispatch($article);
+            $this->clearCacheForAllArticles();
         }
 
         return redirect('/article');
@@ -88,7 +87,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        Gate::authorize('update', [self::class]);
+        Gate::authorize('update', [self::class, $article]);
         return view('article.edit_article', ['article' => $article]);
     }
 
@@ -97,7 +96,7 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        Gate::authorize('update', [self::class]);
+        Gate::authorize('update', [self::class, $article]);
 
         $request->validate([
             'name'=>'required',
@@ -124,7 +123,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        Gate::authorize('delete', [self::class]);
+        Gate::authorize('delete', [self::class, $article]);
         $comments = Comment::where('article_id', $article->id)->delete();
         $res = $article->delete();
 

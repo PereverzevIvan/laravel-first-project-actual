@@ -19,15 +19,13 @@ class ArticleMailJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(public Article $article) {
-        $this->article = $article;
-    }
+    public function __construct(public Article $article) {}
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        Mail::to('peregh320@gmail.com')->send(new ArticleMail($this->article));
+        Mail::to('i.d.pereverzev@mail.ru')->send(new ArticleMail($this->article));
     }
 }

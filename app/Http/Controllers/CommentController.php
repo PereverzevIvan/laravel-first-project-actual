@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use App\Mail\AdminCommentMail;
+use App\Mail\StatMail;
 use Illuminate\Support\Facades\Mail;
 use App\Notifications\NewCommentNotify;
 use App\Events\newCommentEvent;
@@ -52,7 +53,7 @@ class CommentController extends Controller
             $users = User::where('id', '!=', Auth::user()->id)->get();
 
             Notification::send($users, new NewCommentNotify($article));
-            Mail::to('peregh320@gmail.com')->send(new AdminCommentMail($comment));
+            Mail::to('i.d.pereverzev@mail.ru')->send(new AdminCommentMail($comment));
         }
 
         return redirect()->route('article.show', ['article' => $request->article_id]);

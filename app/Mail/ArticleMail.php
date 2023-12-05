@@ -27,7 +27,7 @@ class ArticleMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('peregh320@gmail.com'),
+            from: new Address('i.d.pereverzev@mail.ru'),
             subject: 'Article Mail',
         );
     }

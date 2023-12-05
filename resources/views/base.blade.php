@@ -59,17 +59,17 @@
             <nav class="header__nav">
                 <ul class="header__list">
                     <li class="header__item">
-                        <a href="/" class="header__link">Главная</a>
+                        <a href="/" class="header__link @activeLink('/')">Главная</a>
                     </li>
                     <li class="header__item">
-                        <a href="/article" class="header__link">Статьи</a>
+                        <a href="/article" class="header__link @activeLink('article')">Статьи</a>
                     </li>
                     @can('create')
                         <li class="header__item">
-                            <a href="/article/create" class="header__link">Создание статьи</a>
+                            <a href="/article/create" class="header__link @activeLink('article/create')">Создание статьи</a>
                         </li>
                         <li class="header__item">
-                            <a href="/comment/" class="header__link">Комментарии</a>
+                            <a href="/comment/" class="header__link @activeLink('comment/')">Комментарии</a>
                         </li>
                     @endcan
                     @auth
